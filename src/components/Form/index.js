@@ -1,35 +1,58 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 
-class InputForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: ''
-        };
+const InputForm = () => {
+    const [callSign, setCallSign] = useState('');
+    const [name, setName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [email, setEmail] = useState('');
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+    const handleSubmit = (event) => {
+        const submission = { callSign, name, phoneNumber, email }
+        console.log(submission)
+
+        fetch('http://localhost:8000/submissions', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(submission)
+        }).then( () => {
+            console.log('it worked!');
+        })
+        alert('Thanks for submitting!');
     }
 
-    handleChange(event) {
-        this.setState({value: event.target.value});
-    }
-
-    handleSubmit(event) {
-        alert('You submitted: ' + this.state.value + ' - Thanks!');
-        event.preventDefault();
-    }
-
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    Write something:
-                    <textarea value={this.state.value} onChange={this.handleChange} />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
-        );
-    }
+    return (
+        <form onSubmit={handleSubmit} id="main-form">
+            <label>Call Sign</label>
+            <input required
+                type="text"
+                placeholder="Enter your call sign"
+                value={callSign}
+                onChange={(event) => setCallSign(event.target.value)}
+            />
+            <label>Name</label>
+            <input required
+                type="text"
+                placeholder="Enter your name"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+            />
+            <label>Phone Number</label>
+            <input required
+                type="text"
+                placeholder="Enter your phone number"
+                value={phoneNumber}
+                onChange={(event) => setPhoneNumber(event.target.value)}
+            />
+            <label>Email</label>
+            <input required
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+            />
+            <input type="submit" />
+        </form>
+    )
 }
+
 export default InputForm;
