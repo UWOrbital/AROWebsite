@@ -1,4 +1,8 @@
-import { useState } from 'react';
+import { React, useState } from 'react';
+import { db } from "../../firebase";
+//import { getDatabase, ref, set } from "firebase/database";
+
+//const database = getDatabase();
 
 const InputForm = () => {
     const [callSign, setCallSign] = useState('');
@@ -6,18 +10,30 @@ const InputForm = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState('');
 
+    //const ref = firebase.firestore().collection("users");
+    //console.log(ref);
+
     const handleSubmit = (event) => {
+
         const submission = { callSign, name, phoneNumber, email }
         console.log(submission)
 
-        fetch('http://localhost:8000/submissions', {
+        db.collection("users").add(submission);
+
+        //fetch('http://localhost:8000/submissions', {
+        /* fetch('https://uwu-orbital.firebaseio.com/users', {
             method: 'POST',
-            headers: { "Content-Type": "application/json" },
+            //headers: { "Content-Type": "application/json" },
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify(submission)
         }).then( () => {
             console.log('it worked!');
-        })
+        }) */
         alert('Thanks for submitting!');
+
     }
 
     return (
