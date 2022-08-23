@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { db } from "../../firebase-config";
+import { db } from "../firebase-config";
 //import { getDatabase, ref, set } from "firebase/database";
 
 //const database = getDatabase();
@@ -17,7 +17,7 @@ const InputForm = () => {
     const submission = { callSign, name, phoneNumber, email };
     console.log(submission);
 
-    db.collection("users").add(submission);
+    // db.collection("users").add(submission);
 
     //fetch('http://localhost:8000/submissions', {
     /* fetch('https://uwu-orbital.firebaseio.com/users', {
