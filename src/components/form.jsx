@@ -35,12 +35,15 @@ const InputForm = () => {
         email: newEmail,
         name: newName,
         phonenumber: newPhoneNumber,
+      }).then((res) => {
+        console.log(res);
       });
 
       // onClose();
     } catch (err) {
       console.error("writeToDB failed. reason :", err);
     }
+    document.getElementById("main-form").submit();
   };
 
   return (
